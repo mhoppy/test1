@@ -1,5 +1,8 @@
 package playground;
 
+import com.unicredit.rates.RateGenerator;
+import com.unicredit.rates.RateValue;
+
 public class TryString {
 
 	/**
@@ -16,7 +19,10 @@ public class TryString {
 		System.out.println("[" + r2.getMain() + "][" + r2.getPips() + "]");
 		
 		RateValue r3 = new RateValue("13883.38");
-		System.out.println("[" + r3.getMain() + "][" + r3.getPips() + "]");		
+		System.out.println("[" + r3.getMain() + "][" + r3.getPips() + "]");
+		
+		RateGenerator rateGenerator = new RateGenerator();
+		rateGenerator.run();
 	}
 
 }

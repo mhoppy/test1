@@ -1,4 +1,4 @@
-package playground;
+package com.unicredit.rates;
 
 public class RateValue {
 	private String main;

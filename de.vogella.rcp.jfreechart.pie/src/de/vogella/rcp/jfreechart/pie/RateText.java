@@ -114,6 +114,11 @@ public abstract class RateText extends Canvas {
 
 	public void setText(String text) {
 		textLayout.setText(text);
+		styleText();
+		redraw();
+		getParent().layout(true, true);
+
+		//update();
 	}
 	
 	
