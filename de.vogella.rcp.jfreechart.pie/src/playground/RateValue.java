@@ -22,6 +22,10 @@ public class RateValue {
 	public void setPips(String pips) {
 		this.pips = pips;
 	}
+
+	public String getText() {
+		return main + pips;
+	}
 	
 	
 	
