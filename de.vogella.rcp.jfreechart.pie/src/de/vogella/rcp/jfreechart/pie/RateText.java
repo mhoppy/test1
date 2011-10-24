@@ -12,6 +12,7 @@ import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.graphics.TextLayout;
 import org.eclipse.swt.graphics.TextStyle;
+import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Event;
@@ -22,7 +23,7 @@ import org.eclipse.swt.widgets.Listener;
  * @author ex01487
  *
  */
-public class RateText extends Canvas {
+public abstract class RateText extends Canvas {
 
 	private Font font1;
 	private Font font2;
@@ -32,20 +33,17 @@ public class RateText extends Canvas {
 	private Color yellow;
 	private Color gray;
 	
-	private TextLayout highOrderLayout;
-	private TextLayout lowOrderLayout;
+	protected TextLayout textLayout;
 	
-	private TextStyle style1;
-	private TextStyle style2;
+	protected TextStyle style1;
+	protected TextStyle style2;
 	private TextStyle style3;
 	
-	String highOrderVal;
-	String lowOrderVal;
+	String value;
 	
-	public RateText(Composite parent, int style, String txt) {
+	public RateText(Composite parent, int style, String initialValue) {
 		super(parent, style);
-		highOrderVal="1.38";
-		lowOrderVal="621";
+		value=initialValue;
 		
 	    font1 = new Font(parent.getDisplay(), "Arial", 14, SWT.NORMAL);
 	    font2 = new Font(parent.getDisplay(), "Arial", 24, SWT.NORMAL);
@@ -57,24 +55,20 @@ public class RateText extends Canvas {
 	    gray = parent.getDisplay().getSystemColor(SWT.COLOR_GRAY);
 
 	   
-	    lowOrderLayout = new TextLayout(parent.getDisplay());
-	    highOrderLayout = new TextLayout(parent.getDisplay());
+	    textLayout = new TextLayout(parent.getDisplay());
+	    
+	    //GridLayout layout = new GridLayout();
+	    
 	    
 	    style1 = new TextStyle(font1, yellow, blue);
 	    style2 = new TextStyle(font2, yellow, blue);
 	    style3 = new TextStyle(font3, yellow, blue);
 
 	    
-	    lowOrderLayout.setText(lowOrderVal);
-	    lowOrderLayout.setStyle(style2, 0, 1);
-	    lowOrderLayout.setStyle(style1, 2, 2);
-	    //lowOrderLayout.setStyle(style3, 6, 7);
-	    
-	    highOrderLayout.setText(lowOrderVal);
-	    highOrderLayout.setStyle(style1, 0, 3);
+	    textLayout.setText(value);
+	    styleText();
 
 	    parent.setBackground(parent.getDisplay().getSystemColor(SWT.COLOR_WHITE));
-
 
 	    addDisposeListener(new DisposeListener() {
 	         public void widgetDisposed(DisposeEvent e) {
@@ -87,8 +81,7 @@ public class RateText extends Canvas {
 	        	 font2.dispose();
 	        	 font3.dispose();
 	        	 
-	        	 highOrderLayout.dispose();
-	        	 lowOrderLayout.dispose();
+	        	 textLayout.dispose();
 	         }
 	     });
 	    
@@ -99,19 +92,20 @@ public class RateText extends Canvas {
 	     });
 	  }
 
+	protected abstract void styleText();
+
 	  void paintControl(PaintEvent event) {
 		  System.out.println("drawing...");
 		  // draw (GC gc, int x, int y)
 		  
-		  lowOrderLayout.draw(event.gc, 10, 10);
-		  highOrderLayout.draw(event.gc, 10, 10);
+		  textLayout.draw(event.gc, 10, 10);
 	  }
 	  
 	  public Point computeSize(int wHint, int hHint, boolean changed) {
 		     int width = 0, height = 0;
-		     if (highOrderLayout != null) {
+		     if (textLayout != null) {
 		    	 
-		         Rectangle bounds = highOrderLayout.getBounds();
+		         Rectangle bounds = textLayout.getBounds();
 		         width = bounds.width + 100;
 		         height = bounds.height + 50;
 		     }

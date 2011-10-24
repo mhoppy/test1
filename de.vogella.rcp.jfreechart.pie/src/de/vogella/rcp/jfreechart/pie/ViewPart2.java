@@ -79,7 +79,6 @@ public class ViewPart2 extends ViewPart {
 		  
 		  text.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 		  
-		  
 		  //Button button = new Button(form.getBody(), SWT.CHECK);
 		  //button.setText("An example of a checkbox in a form");
 		  Button button = toolkit.createButton(form.getBody(), "A checkbox in a form", SWT.CHECK);
@@ -88,15 +87,13 @@ public class ViewPart2 extends ViewPart {
 		  gd.horizontalSpan = 3;
 		  button.setLayoutData(gd);
 		  
-		  
-		  
 		  //TextLayout rate = createRate(form.getBody());
-		  RateText rt = new RateText(form.getBody(), SWT.NONE, "99.6321");
+		  //RateText rt = new RateText(form.getBody(), SWT.NONE, "99.6321");
 		  
-		  gd = new GridData();
-		  gd.horizontalSpan = 3;
-		  rt.setLayoutData(gd);
-		  
+		  //gd = new GridData();
+		  //gd.horizontalSpan = 3;
+		  //rt.setLayoutData(gd);
+		  RateText2 rt = new RateText2(form.getBody(), SWT.NONE, "1.38621");
 		  
 		   final Table table = new Table(form.getBody(), SWT.BORDER);
 		    table.setHeaderVisible(true);
