@@ -30,6 +30,7 @@ import org.eclipse.ui.forms.widgets.ExpandableComposite;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.ui.forms.widgets.Hyperlink;
 import org.eclipse.ui.forms.widgets.ScrolledForm;
+import org.eclipse.ui.forms.widgets.Section;
 import org.eclipse.ui.forms.widgets.TableWrapData;
 import org.eclipse.ui.part.ViewPart;
 import org.jfree.chart.ChartFactory;
@@ -60,8 +61,7 @@ public class ViewPart2 extends ViewPart {
 
 		GridLayout layout = new GridLayout();
 		form.getBody().setLayout(layout);
-		Hyperlink link = toolkit.createHyperlink(form.getBody(), "Click here.",
-				SWT.WRAP);
+		Hyperlink link = toolkit.createHyperlink(form.getBody(), "Click here.", SWT.WRAP);
 
 		link.addHyperlinkListener(new HyperlinkAdapter() {
 			public void linkActivated(HyperlinkEvent e) {
@@ -84,13 +84,35 @@ public class ViewPart2 extends ViewPart {
 
 		// Button button = new Button(form.getBody(), SWT.CHECK);
 		// button.setText("An example of a checkbox in a form");
-		Button button = toolkit.createButton(form.getBody(),
-				"A checkbox in a form", SWT.CHECK);
+		Button button = toolkit.createButton(form.getBody(), "A checkbox in a form", SWT.CHECK);
 
 		gd = new GridData();
 		gd.horizontalSpan = 3;
 		button.setLayoutData(gd);
-
+		
+		
+		/***
+		 * Drop down
+		 */
+//		Section section = toolkit.createSection(form.getBody(),	Section.TITLE_BAR | Section.TWISTIE );
+//		section.setText("my title");
+//
+//		Composite composite = toolkit.createComposite(section, SWT.WRAP);
+//
+//		GridData data = new GridData(GridData.FILL_HORIZONTAL);
+//		data.horizontalSpan = 3;
+//
+//
+//		data = new GridData(GridData.HORIZONTAL_ALIGN_END);
+//		Label modelLabel = toolkit.createLabel(composite,"Model");
+//		modelLabel.setLayoutData(data);
+//
+//		data = new GridData(GridData.FILL_HORIZONTAL);
+//		modelField = new Combo(composite,SWT.DROP_DOWN);
+//		modelField.setItems(getStringList(modelList));
+//		modelField.setLayoutData(data);
+//		
+		/*** END **/
 		// TextLayout rate = createRate(form.getBody());
 		// RateText rt = new RateText(form.getBody(), SWT.NONE, "99.6321");
 
@@ -200,35 +222,7 @@ public class ViewPart2 extends ViewPart {
 		}
 	}
 
-	private TextLayout createRate(final Composite parent) {
-		Font font1 = new Font(parent.getDisplay(), "Arial", 14, SWT.NORMAL);
-		Font font2 = new Font(parent.getDisplay(), "Arial", 24, SWT.NORMAL);
-		Font font3 = new Font(parent.getDisplay(), "Arial", 14, SWT.NORMAL);
 
-		Color blue = parent.getDisplay().getSystemColor(SWT.COLOR_BLUE);
-		Color green = parent.getDisplay().getSystemColor(SWT.COLOR_GREEN);
-		Color yellow = parent.getDisplay().getSystemColor(SWT.COLOR_YELLOW);
-		Color gray = parent.getDisplay().getSystemColor(SWT.COLOR_GRAY);
-
-		final TextLayout layout = new TextLayout(parent.getDisplay());
-		TextStyle style1 = new TextStyle(font1, yellow, blue);
-		TextStyle style2 = new TextStyle(font2, yellow, blue);
-		TextStyle style3 = new TextStyle(font3, yellow, blue);
-
-		layout.setText("89.6321");
-		layout.setStyle(style1, 0, 3);
-		layout.setStyle(style2, 4, 5);
-		layout.setStyle(style3, 6, 7);
-
-		parent.setBackground(parent.getDisplay()
-				.getSystemColor(SWT.COLOR_WHITE));
-		parent.addListener(SWT.Paint, new Listener() {
-			public void handleEvent(Event event) {
-				layout.draw(event.gc, 10, 10);
-			}
-		});
-		return layout;
-	}
 	
 	private void generateRates() {
 		ratethread = new Thread(rateGenerator);
