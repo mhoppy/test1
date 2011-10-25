@@ -40,6 +40,11 @@ import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.handlers.IHandlerService;
 import org.eclipse.ui.part.ViewPart;
 
+import com.unicredit.rates.RateGenerator;
+import com.unicredit.rates.view.RateText2;
+
+
+
 import rcpmail.MessageTableView;
 import rcpmail.handlers.DeleteViewMessageHandler;
 import rcpmail.handlers.MarkAsSpamAndMoveHandler;
@@ -59,6 +64,10 @@ public class RateView extends ViewPart {
 	private Control bodyText;
 	private Composite messageComposite;
 	private Composite emptyComposite;
+	
+	private RateGenerator rateGenerator;
+	private Thread ratethread;
+
 
 	public void createPartControl(Composite parent) {
 		// Top level with parent as the parent
@@ -103,7 +112,7 @@ public class RateView extends ViewPart {
 		resetButton.setText("Reset");
 		
 		
-		// New composit to group +/-
+		// New composite to hold button group +/-
 		Composite widen = new Composite(banner, SWT.NONE);
 		widen.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 		layout = new GridLayout();
@@ -120,6 +129,19 @@ public class RateView extends ViewPart {
 		final Button minusButton = new Button(widen, SWT.BUTTON2);
 		minusButton.setLayoutData(new GridData());
 		minusButton.setText("-");
+
+		/***
+		 * The rates
+		 */
+		RateText2 rateText = new RateText2(banner, SWT.NONE, "1.38621");
+//		gd = new GridData();
+//		gd.horizontalSpan = 3;
+//		rateText.setLayoutData(gd);
+
+
+		rateGenerator = new RateGenerator();
+		rateGenerator.setRateListener(rateText);
+
 
 				
 		Label subjectLabel = new Label(banner, SWT.WRAP);
@@ -152,6 +174,9 @@ public class RateView extends ViewPart {
 		bodyText.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 		ISelectionService selectionService = (ISelectionService) getSite()
 				.getService(ISelectionService.class);
+		
+		
+		generateRates();
 	}
 
 	// it is important to implement setFocus()!
@@ -190,6 +215,17 @@ public class RateView extends ViewPart {
 
 	public void dispose() {
 		super.dispose();
+		rateGenerator.stop();
+		try {
+			ratethread.join();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
-
+	
+	private void generateRates() {
+		ratethread = new Thread(rateGenerator);
+		ratethread.start();
+	}
 }
