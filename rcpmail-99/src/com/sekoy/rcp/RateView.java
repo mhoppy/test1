@@ -41,6 +41,7 @@ import org.eclipse.ui.handlers.IHandlerService;
 import org.eclipse.ui.part.ViewPart;
 
 import com.unicredit.rates.RateGenerator;
+import com.unicredit.rates.view.MarginBand;
 import com.unicredit.rates.view.RateText2;
 
 
@@ -74,10 +75,15 @@ public class RateView extends ViewPart {
 		
 		//  
 		messageComposite = new Composite(parent, SWT.NONE);
-
+		/***
+		 * GridLayout an SWT layout manager (i.e., it controls the layout of the
+		 * form). GridData is a part of GridLayout and enables you to set layout
+		 * properties on the SWT components participating in the layout.
+		 */
 		GridLayout layout = new GridLayout();
 		layout.marginHeight = 0;
 		layout.marginWidth = 0;
+		layout.numColumns = 1;
 		messageComposite.setLayout(layout);
 
 		// top banner with message composite as its parent
@@ -89,8 +95,6 @@ public class RateView extends ViewPart {
 		layout.numColumns = 3;
 		banner.setLayout(layout);
 
-		// setup bold font
-		Font boldFont = JFaceResources.getFontRegistry().getBold(JFaceResources.DEFAULT_FONT);
 
 //		Label l = new Label(banner, SWT.WRAP);
 //		l.setText("Subject:");
@@ -110,7 +114,11 @@ public class RateView extends ViewPart {
 		resetButton.setLayoutData(new GridData());
 		resetButton.setText("Reset");
 		
-		
+
+		// Try and make this span the three cols
+		GridData gd = new GridData();
+		gd.horizontalSpan = 3;
+		banner.setLayoutData(gd);		
 		// New composite to hold button group +/-
 		Composite widen = new Composite(banner, SWT.NONE);
 		widen.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
@@ -120,6 +128,7 @@ public class RateView extends ViewPart {
 		layout.numColumns = 2;
 		widen.setLayout(layout);
 		
+
 		
 		final Button plusButton = new Button(widen, SWT.BUTTON2);
 		plusButton.setLayoutData(new GridData());
@@ -134,7 +143,27 @@ public class RateView extends ViewPart {
 		 */
 		// New composite to hold rates group
 		Composite rateComposite = new Composite(messageComposite, SWT.NONE);
-		rateComposite.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+		/***
+		 * * @param horizontalAlignment how control will be positioned
+		 * horizontally within a cell, one of: SWT.BEGINNING (or SWT.LEFT),
+		 * SWT.CENTER, SWT.END (or SWT.RIGHT), or SWT.FILL
+		 * 
+		 * @param verticalAlignment
+		 *            how control will be positioned vertically within a cell,
+		 *            one of: SWT.BEGINNING (or SWT.TOP), SWT.CENTER, SWT.END
+		 *            (or SWT.BOTTOM), or SWT.FILL
+		 * @param grabExcessHorizontalSpace
+		 *            whether cell will be made wide enough to fit the remaining
+		 *            horizontal space
+		 * @param grabExcessVerticalSpace
+		 *            whether cell will be made high enough to fit the remaining
+		 *            vertical space
+		 */
+		rateComposite.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, false));
+		/***
+		 * Whereas the org.eclipse.swt.layout.Griddata is the attribute of the control, describing its 
+		 * span, indentation, margin etc for each gird(cell). Each component should have a unique Griddata.
+		 */
 		layout = new GridLayout();
 		layout.marginHeight = 2;
 		layout.marginWidth = 5;
@@ -152,47 +181,27 @@ public class RateView extends ViewPart {
 		final Button skewButton2 = new Button(rateComposite, SWT.BUTTON2);
 		skewButton2.setLayoutData(new GridData());
 		skewButton2.setText(">");
+
+		MarginBand marginBand = new MarginBand(messageComposite, SWT.NONE);	
 		
-//		gd = new GridData();
-//		gd.horizontalSpan = 3;
-//		rateText.setLayoutData(gd);
+		gd = new GridData();
+		gd.horizontalSpan = 3;
+		marginBand.setLayoutData(gd);
 
 
 		rateGenerator = new RateGenerator();
 		rateGenerator.addRateListener(rateText1);
 		rateGenerator.addRateListener(rateText2);
 				
-		Label subjectLabel = new Label(banner, SWT.WRAP);
-		subjectLabel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true,false));
-
-
-
-		Link link = new Link(banner, SWT.NONE);
-		final GridData gd_link = new GridData(SWT.FILL, SWT.CENTER, true,
-				false, 2, 1);
-		link.setLayoutData(gd_link);
-		link.addSelectionListener(new SelectionAdapter() {
-			public void widgetSelected(SelectionEvent e) {
-				MessageDialog.openInformation(getSite().getShell(),
-								"Not Implemented",
-								"Imagine the address book or a new message being created now.");
-			}
-		});
 
 //		l = new Label(banner, SWT.WRAP);
 //		l.setText("Date:");
 //		l.setFont(boldFont);
 		
-		Label date = new Label(banner, SWT.WRAP);
-		date.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
 
 		// message contents is a field so that it can be referenced from
 		// setFocus()
 		bodyText = new Text(messageComposite, SWT.MULTI | SWT.WRAP);
-		bodyText.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-		ISelectionService selectionService = (ISelectionService) getSite()
-				.getService(ISelectionService.class);
-		
 		
 		generateRates();
 	}
