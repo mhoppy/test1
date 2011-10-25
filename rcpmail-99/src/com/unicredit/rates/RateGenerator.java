@@ -1,27 +1,34 @@
 package com.unicredit.rates;
 
 import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class RateGenerator implements Runnable {
 	private static final int RATE_LEN = 4;
 	private Random random = new Random();
-	private RateListener rateListener;
-	private double rate = 1.38;
+	private List<RateHolder> rateListener = new ArrayList<RateHolder>();
+	
 	private DecimalFormat df = new DecimalFormat("#.#####");
 	private volatile boolean running=true;
 
 	@Override
 	public void run() {
 		while(running) {
-			double delta = random.nextDouble() / 9999;
-			if ( random.nextInt(10)>5) {
-				rate -= delta;
-			} else {
-				rate += delta;
+			for(RateHolder r : rateListener) {
+				double rate = r.getRate();
+				double delta = random.nextDouble() / 9999;
+				if ( random.nextInt(10)>5) {
+					rate -= delta;
+				} else {
+					rate += delta;
+				}
+				r.setRate(rate);
+				System.out.println(getRate(rate));
+			
+				r.getRateListener().onRateChange(getRate(r.getRate()));
 			}
-			System.out.println(getRate(rate));
-			rateListener.onRateChange(getRate(rate));
 			try {
 				Thread.sleep(1000);
 			} catch (InterruptedException e) {
@@ -45,12 +52,10 @@ public class RateGenerator implements Runnable {
 		return sRate;
 	}
 
-	public RateListener getRateListener() {
-		return rateListener;
-	}
-
-	public void setRateListener(RateListener rateListener) {
-		this.rateListener = rateListener;
+	public void addRateListener(RateListener rateListener) {
+		RateHolder rateHolder = new RateHolder();
+		rateHolder.setRateListener(rateListener);
+		this.rateListener.add(rateHolder);
 	}
 	
 	public void stop() {

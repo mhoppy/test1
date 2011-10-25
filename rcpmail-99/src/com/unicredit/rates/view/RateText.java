@@ -44,7 +44,7 @@ public abstract class RateText extends Canvas {
 		super(parent, style);
 
 		font1 = new Font(parent.getDisplay(), "Arial", 14, SWT.NORMAL);
-		font2 = new Font(parent.getDisplay(), "Arial", 24, SWT.NORMAL);
+		font2 = new Font(parent.getDisplay(), "Arial", 28, SWT.NORMAL);
 		font3 = new Font(parent.getDisplay(), "Arial", 14, SWT.NORMAL);
 
 		blue = parent.getDisplay().getSystemColor(SWT.COLOR_DARK_BLUE);

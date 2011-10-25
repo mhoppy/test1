@@ -73,8 +73,8 @@ public class RateText2 extends Composite implements RateListener {
 		highOrderLayout = new MainRateText(this, style, rate.getMain());
 		pipOrderLayout = new PipRateText(this, style, rate.getPips());
 
-		//setBackground(getDisplay().getSystemColor(SWT.COLOR_DARK_BLUE));
-		setBackground(getDisplay().getSystemColor(SWT.COLOR_BLUE));
+		setBackground(getDisplay().getSystemColor(SWT.COLOR_DARK_BLUE));
+		//setBackground(getDisplay().getSystemColor(SWT.COLOR_BLUE));
 
 		addDisposeListener(new DisposeListener() {
 			public void widgetDisposed(DisposeEvent e) {

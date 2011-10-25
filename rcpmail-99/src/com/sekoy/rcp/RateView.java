@@ -75,7 +75,6 @@ public class RateView extends ViewPart {
 		//  
 		messageComposite = new Composite(parent, SWT.NONE);
 
-
 		GridLayout layout = new GridLayout();
 		layout.marginHeight = 0;
 		layout.marginWidth = 0;
@@ -124,25 +123,44 @@ public class RateView extends ViewPart {
 		
 		final Button plusButton = new Button(widen, SWT.BUTTON2);
 		plusButton.setLayoutData(new GridData());
-		plusButton.setText("+");
+		plusButton.setText(" + ");
 
 		final Button minusButton = new Button(widen, SWT.BUTTON2);
 		minusButton.setLayoutData(new GridData());
-		minusButton.setText("-");
+		minusButton.setText(" - ");
 
 		/***
 		 * The rates
 		 */
-		RateText2 rateText = new RateText2(banner, SWT.NONE, "1.38621");
+		// New composite to hold rates group
+		Composite rateComposite = new Composite(messageComposite, SWT.NONE);
+		rateComposite.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+		layout = new GridLayout();
+		layout.marginHeight = 2;
+		layout.marginWidth = 5;
+		layout.numColumns = 4;
+		rateComposite.setLayout(layout);
+		
+		final Button skewButton1 = new Button(rateComposite, SWT.BUTTON2);
+		skewButton1.setLayoutData(new GridData());
+		skewButton1.setText("<");
+		
+		RateText2 rateText1 = new RateText2(rateComposite, SWT.NONE, "1.38621");
+		
+		RateText2 rateText2 = new RateText2(rateComposite, SWT.NONE, "1.38621");
+		
+		final Button skewButton2 = new Button(rateComposite, SWT.BUTTON2);
+		skewButton2.setLayoutData(new GridData());
+		skewButton2.setText(">");
+		
 //		gd = new GridData();
 //		gd.horizontalSpan = 3;
 //		rateText.setLayoutData(gd);
 
 
 		rateGenerator = new RateGenerator();
-		rateGenerator.setRateListener(rateText);
-
-
+		rateGenerator.addRateListener(rateText1);
+		rateGenerator.addRateListener(rateText2);
 				
 		Label subjectLabel = new Label(banner, SWT.WRAP);
 		subjectLabel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true,false));
