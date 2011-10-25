@@ -72,7 +72,7 @@ public class RateView extends ViewPart {
 
 	public void createPartControl(Composite parent) {
 		// Top level with parent as the parent
-		
+		setPartName("partName");
 		//  
 		messageComposite = new Composite(parent, SWT.NONE);
 		/***
@@ -120,8 +120,8 @@ public class RateView extends ViewPart {
 		gd.horizontalSpan = 3;
 		banner.setLayoutData(gd);		
 		// New composite to hold button group +/-
-		Composite widen = new Composite(banner, SWT.NONE);
-		widen.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+		Composite widen = new Composite(messageComposite, SWT.NONE);
+		widen.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, false));
 		layout = new GridLayout();
 		layout.marginHeight = 2;
 		layout.marginWidth = 5;
@@ -172,7 +172,7 @@ public class RateView extends ViewPart {
 		
 		final Button skewButton1 = new Button(rateComposite, SWT.BUTTON2);
 		skewButton1.setLayoutData(new GridData());
-		skewButton1.setText("<");
+		skewButton1.setText("<skew");
 		
 		RateText2 rateText1 = new RateText2(rateComposite, SWT.NONE, "1.38621");
 		
@@ -180,7 +180,7 @@ public class RateView extends ViewPart {
 		
 		final Button skewButton2 = new Button(rateComposite, SWT.BUTTON2);
 		skewButton2.setLayoutData(new GridData());
-		skewButton2.setText(">");
+		skewButton2.setText("skew>");
 
 		MarginBand marginBand = new MarginBand(messageComposite, SWT.NONE);	
 		

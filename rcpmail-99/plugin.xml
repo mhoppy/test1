@@ -87,9 +87,10 @@
             restorable="true">
       </view>
       <view
+            allowMultiple="true"
             class="com.sekoy.rcp.RateView"
             id="sekoy.rcp.first"
-            name="RateView"
+            name="Rate Monitor"
             restorable="true">
       </view>
       <view

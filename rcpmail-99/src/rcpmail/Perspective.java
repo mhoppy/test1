@@ -24,12 +24,13 @@ public class Perspective implements IPerspectiveFactory {
 		IFolderLayout folder = layout.createFolder("messages", IPageLayout.TOP,
 				0.5f, editorArea);
 		folder.addPlaceholder(MessageView.ID + ":*");
+		
 		folder.addView(MessageView.ID);
-		layout.addView(MessageTableView.ID, IPageLayout.TOP, 0.45f, "messages");
+		//layout.addView(MessageTableView.ID, IPageLayout.TOP, 0.45f, "messages");
 		
 		layout.addView(RateView.ID, IPageLayout.TOP, 0.45f, "rates");
-		
-		layout.addView(View.ID, IPageLayout.TOP, 0.45f, "pie");
+		layout.addView(RateView.ID, IPageLayout.TOP, 0.45f, "rates");
+		//layout.addView(View.ID, IPageLayout.TOP, 0.45f, "pie");
 
 		layout.getViewLayout(MessageTableView.ID).setCloseable(false);
 		layout.getViewLayout(MessageTableView.ID).setMoveable(false);
