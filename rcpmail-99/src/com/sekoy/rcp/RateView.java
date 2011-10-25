@@ -44,8 +44,6 @@ import com.unicredit.rates.RateGenerator;
 import com.unicredit.rates.view.MarginBand;
 import com.unicredit.rates.view.RateText2;
 
-
-
 import rcpmail.MessageTableView;
 import rcpmail.handlers.DeleteViewMessageHandler;
 import rcpmail.handlers.MarkAsSpamAndMoveHandler;
@@ -65,15 +63,14 @@ public class RateView extends ViewPart {
 	private Control bodyText;
 	private Composite messageComposite;
 	private Composite emptyComposite;
-	
+
 	private RateGenerator rateGenerator;
 	private Thread ratethread;
-
 
 	public void createPartControl(Composite parent) {
 		// Top level with parent as the parent
 		setPartName("partName");
-		//  
+		//
 		messageComposite = new Composite(parent, SWT.NONE);
 		/***
 		 * GridLayout an SWT layout manager (i.e., it controls the layout of the
@@ -95,17 +92,16 @@ public class RateView extends ViewPart {
 		layout.numColumns = 3;
 		banner.setLayout(layout);
 
+		// Label l = new Label(banner, SWT.WRAP);
+		// l.setText("Subject:");
+		// l.setFont(boldFont);
 
-//		Label l = new Label(banner, SWT.WRAP);
-//		l.setText("Subject:");
-//		l.setFont(boldFont);
-		
-		String[] currencies = {"EURUSD", "EURGBP", "GBPUSD"};
+		String[] currencies = { "EURUSD", "EURGBP", "GBPUSD" };
 		Combo currency = new Combo(banner, SWT.DEFAULT);
 		currency.setItems(currencies);
 		currency.select(0);
-		
-		String[] modes = {"NORMAL", "VOLATILE"};
+
+		String[] modes = { "NORMAL", "VOLATILE" };
 		Combo mode = new Combo(banner, SWT.DEFAULT);
 		mode.setItems(modes);
 		mode.select(1);
@@ -113,12 +109,11 @@ public class RateView extends ViewPart {
 		final Button resetButton = new Button(banner, SWT.BUTTON1);
 		resetButton.setLayoutData(new GridData());
 		resetButton.setText("Reset");
-		
 
 		// Try and make this span the three cols
 		GridData gd = new GridData();
 		gd.horizontalSpan = 3;
-		banner.setLayoutData(gd);		
+		banner.setLayoutData(gd);
 		// New composite to hold button group +/-
 		Composite widen = new Composite(messageComposite, SWT.NONE);
 		widen.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, false));
@@ -127,9 +122,7 @@ public class RateView extends ViewPart {
 		layout.marginWidth = 5;
 		layout.numColumns = 2;
 		widen.setLayout(layout);
-		
 
-		
 		final Button plusButton = new Button(widen, SWT.BUTTON2);
 		plusButton.setLayoutData(new GridData());
 		plusButton.setText(" + ");
@@ -159,56 +152,55 @@ public class RateView extends ViewPart {
 		 *            whether cell will be made high enough to fit the remaining
 		 *            vertical space
 		 */
-		rateComposite.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, false));
+		rateComposite.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true,
+				false));
 		/***
-		 * Whereas the org.eclipse.swt.layout.Griddata is the attribute of the control, describing its 
-		 * span, indentation, margin etc for each gird(cell). Each component should have a unique Griddata.
+		 * Whereas the org.eclipse.swt.layout.Griddata is the attribute of the
+		 * control, describing its span, indentation, margin etc for each
+		 * gird(cell). Each component should have a unique Griddata.
 		 */
 		layout = new GridLayout();
 		layout.marginHeight = 2;
 		layout.marginWidth = 5;
 		layout.numColumns = 4;
 		rateComposite.setLayout(layout);
-		
+
 		final Button skewButton1 = new Button(rateComposite, SWT.BUTTON2);
 		skewButton1.setLayoutData(new GridData());
 		skewButton1.setText("<skew");
-		
+
 		RateText2 rateText1 = new RateText2(rateComposite, SWT.NONE, "1.38621");
-		
+
 		RateText2 rateText2 = new RateText2(rateComposite, SWT.NONE, "1.38621");
-		
+
 		final Button skewButton2 = new Button(rateComposite, SWT.BUTTON2);
 		skewButton2.setLayoutData(new GridData());
 		skewButton2.setText("skew>");
 
-		MarginBand marginBand = new MarginBand(messageComposite, SWT.NONE);	
-		
+		MarginBand marginBand = new MarginBand(messageComposite, SWT.NONE);
+
 		gd = new GridData();
 		gd.horizontalSpan = 3;
 		marginBand.setLayoutData(gd);
 
-
 		rateGenerator = new RateGenerator();
 		rateGenerator.addRateListener(rateText1);
 		rateGenerator.addRateListener(rateText2);
-				
 
-//		l = new Label(banner, SWT.WRAP);
-//		l.setText("Date:");
-//		l.setFont(boldFont);
-		
+		// l = new Label(banner, SWT.WRAP);
+		// l.setText("Date:");
+		// l.setFont(boldFont);
 
 		// message contents is a field so that it can be referenced from
 		// setFocus()
-		bodyText = new Text(messageComposite, SWT.MULTI | SWT.WRAP);
-		
+		// bodyText = new Text(messageComposite, SWT.MULTI | SWT.WRAP);
+
 		generateRates();
 	}
 
 	// it is important to implement setFocus()!
 	public void setFocus() {
-		bodyText.setFocus();
+		// bodyText.setFocus();
 	}
 
 	private WritableValue messageValue = new WritableValue();
@@ -250,7 +242,7 @@ public class RateView extends ViewPart {
 			e.printStackTrace();
 		}
 	}
-	
+
 	private void generateRates() {
 		ratethread = new Thread(rateGenerator);
 		ratethread.start();

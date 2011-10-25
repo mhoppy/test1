@@ -113,6 +113,12 @@
                   label="New &amp;Window"
                   style="push">
             </command>
+            <command
+                  commandId="rcpmail.openNewMonitorCommand"
+                  icon="icons/silk/application_form_add.png"
+                  label="New &amp;Monitor"
+                  style="push">
+            </command>
             <separator
                   name="rcpmail.separator1"
                   visible="true">
@@ -278,6 +284,11 @@
             defaultHandler="rcpmail.handlers.OpenNewWindowHandler"
             id="rcpmail.openNewWindowCommand"
             name="New Window">
+      </command>
+      <command
+            defaultHandler="rcpmail.handlers.OpenNewMonitorHandler"
+            id="rcpmail.openNewMonitorCommand"
+            name="New Monitor">
       </command>
       <command
             id="rcpmail.markAsSpamAndMove"

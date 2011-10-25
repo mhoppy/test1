@@ -69,7 +69,7 @@ public class MarginBand extends Composite {
 	public MarginBand(Composite parent, int style) {
 		super(parent, style);
 		self = this;
-		setBackground(getDisplay().getSystemColor(SWT.COLOR_DARK_GREEN));
+		//setBackground(getDisplay().getSystemColor(SWT.COLOR_DARK_GREEN));
 		table = new Table(this, SWT.BORDER);
 		table.setHeaderVisible(false);
 		table.setLinesVisible(false);
@@ -108,8 +108,9 @@ public class MarginBand extends Composite {
 					int percent = percents[index];
 					Color foreground = gc.getForeground();
 					Color background = gc.getBackground();
-					gc.setForeground(self.getDisplay().getSystemColor(SWT.COLOR_RED));
-					gc.setBackground(self.getDisplay().getSystemColor(SWT.COLOR_YELLOW));
+					//COLOR_RED -> COLOR_YELLOW
+					gc.setForeground(self.getDisplay().getSystemColor(SWT.COLOR_DARK_BLUE));
+					gc.setBackground(self.getDisplay().getSystemColor(SWT.COLOR_BLUE));
 					//
 					int width = (column2.getWidth() - 1) * percent / 100;
 					int centre = (column2.getWidth() - 1) / 2;
